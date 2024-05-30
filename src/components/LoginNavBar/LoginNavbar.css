@@ -1,0 +1,24 @@
+.login-navbar {
+    .nav-links {
+        display: flex;
+        align-items: center;
+        a{
+            padding-left: 15px !important;
+            padding-right: 15px !important;
+        }
+    }
+    .login-nav-dropdown {
+        display: flex;
+        align-items: center;
+        .MuiListItemText-root {
+            text-align: left;
+        }
+    }
+    .dropdown-toggle::after {
+        margin-left: 1.255em;
+    }
+}
+
+.dropdown-item.active, .dropdown-item:active {
+    background-color: var(--fb-primary-color) !important;
+}

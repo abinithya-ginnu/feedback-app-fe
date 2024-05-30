@@ -1,0 +1,42 @@
+.sign-in {
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    background-color: var(--fb-final-color);
+
+    .login-container {
+        display: flex;
+        justify-content: center;
+
+        .signin-title{
+            text-align: left;
+        }
+    }
+
+    .forgot {
+        text-align: end;
+        a{
+            text-decoration: none;
+            color: var(--fb-primary-color);
+        }
+    }
+
+    .signin-button {
+        background-color: var(--fb-primary-color);
+        &:hover {
+            background-color: var(--fb-primary-color);
+        }
+    }
+
+    .signup {
+        
+        h5 {
+            opacity: 0.8;
+            font-size:medium;
+        }
+        a{
+            text-decoration: none;
+            color: var(--fb-primary-color);
+        }
+    }
+}

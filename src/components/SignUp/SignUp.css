@@ -1,0 +1,36 @@
+.fb-sign-up {
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    background-color: var(--fb-final-color);
+    .register-btn{
+        background-color: var(--fb-primary-color);
+        &:hover {
+            background-color: var(--fb-primary-color);
+        }
+    }
+    .signup-container {
+        display: flex;
+        justify-content: center;
+    }
+    .login {
+        a{
+            color: var(--fb-primary-color);
+            text-decoration: none;
+        }
+        
+    }
+    /* .email-field {
+        & .Mui-focused {
+            color: var(--fb-primary-color);
+        }
+        & .MuiInputBase-root {
+            & input {
+              border-color: var(--fb-primary-color);
+            }
+            & .Mui-focused input {
+              border-color: var(--fb-primary-color);
+            }
+          }
+    } */
+}

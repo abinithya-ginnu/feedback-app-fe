@@ -1,5 +1,12 @@
 .App {
   text-align: center;
+  --fb-primary-color: #3F206D !important;
+  --fb-secondary-color: #CEAEFF !important;
+  --fb-tertiary-color: #E9DBFE !important;
+  --fb-final-color: #F2EDF9 !important;
+  --fb-darker-color: #1A0D2D !important;
+  font-family: var(--fb-font-family) !important;
+  --fb-font-family: -apple-system, BlinkMacSystemFont, sans-serif !important;
 }
 
 .App-logo {
