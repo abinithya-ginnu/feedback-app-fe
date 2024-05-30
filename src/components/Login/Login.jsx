@@ -60,7 +60,7 @@ const Login = () => {
     axios.post("http://localhost:8080/login",input).then(
       (response)=>{
           if (response.data.status === "success"){
-            sessionStorage.setItem("id", response.data.userId);
+            sessionStorage.setItem("id", response.data.id);
             sessionStorage.setItem("token", response.data.token);
             sessionStorage.setItem("name", response.data.name);
             navigate("/dashboard");

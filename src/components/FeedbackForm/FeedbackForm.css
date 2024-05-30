@@ -16,4 +16,10 @@
             text-align: left;
         }
     }
+    .submit-button {
+        background-color: var(--fb-primary-color);
+        &:hover {
+            background-color: var(--fb-primary-color);
+        }
+    }
 }
