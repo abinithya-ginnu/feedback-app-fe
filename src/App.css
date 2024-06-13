@@ -9,6 +9,18 @@
   --fb-font-family: -apple-system, BlinkMacSystemFont, sans-serif !important;
 }
 
+.fb-btn-primary{
+  color: white;
+  --bs-btn-bg: #3F206D !important;
+  --bs-btn-border-color: #3F206D !important;
+  --bs-btn-hover-bg:  #3F206D !important;
+  --bs-btn-hover-border-color: #3F206D !important;
+  --bs-btn-active-bg: #3F206D !important;
+  --bs-btn-active-border-color: #3F206D !important;
+  --bs-btn-disabled-bg: #3F206D !important;
+  --bs-btn-disabled-border-color: #3F206D !important;
+}
+
 .App-logo {
   height: 40vmin;
   pointer-events: none;

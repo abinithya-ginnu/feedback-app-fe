@@ -11,7 +11,6 @@ import SentimentVerySatisfiedIcon from '@mui/icons-material/SentimentVerySatisfi
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 
-
 const Item = styled(Paper)(({ theme }) => ({
     ...theme.typography.body2,
     textAlign: 'center',
@@ -108,19 +107,16 @@ const FeedbackForm = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     console.log(input);
-    axios.post("http://localhost:8080/feedback/save",input,{headers:headers}).then(
+    axios.post(process.env.REACT_APP_BASE_URL + "/feedback/save",input,{headers:headers}).then(
       (response)=>{
           if (response.data.status === "success"){
-            sessionStorage.setItem("id", response.data.id);
-            sessionStorage.setItem("token", response.data.token);
-            sessionStorage.setItem("name", response.data.name);
             setState({ ...state, open: true });
             setTimeout(() => {
               setState({ ...state, open: false });
               window.location.href = "https://ictkerala.org/";
             }, 3000);
           } else {
-            setAlert("Invalid credentials!");
+            setAlert("Failed to save feedback!");
             setTimeout(() => {
               setAlert("");
             }, 3000);

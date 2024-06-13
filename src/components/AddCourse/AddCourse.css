@@ -1,0 +1,9 @@
+.add-course-modal {
+    --fb-primary-color: #3F206D ;
+    --fb-font-family: -apple-system, BlinkMacSystemFont, sans-serif !important;
+    .nav-link {
+        button {
+            background-color: #3F206D !important;
+        }
+    }
+}

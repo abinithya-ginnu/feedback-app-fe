@@ -6,7 +6,7 @@ import FeedbackForm from '../FeedbackForm/FeedbackForm'
 const Dashboard = () => {
   return (
     <div>
-      <LoginNavbar/>
+      <LoginNavbar profession="PARTICIPANT" />
       <FeedbackForm />
     </div>
   )

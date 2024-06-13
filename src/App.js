@@ -3,16 +3,20 @@ import './App.css';
 import { Route, Routes } from 'react-router-dom';
 import SignUp from './components/SignUp/SignUp';
 import Login from './components/Login/Login';
-import Dashboard from './components/Dashboard/Dashboard';
+import ParticipantDashboard from './components/ParticipantDashboard/ParticipantDashboard';
 import FeedbackForm from './components/FeedbackForm/FeedbackForm';
+import TrainerDashboard from './components/TrainerDashboard/TrainerDashboard';
+import IQADashboard from './components/IQADashboard/IQADashboard';
 
 function App() {
   return (
     <div className="App">
       <Routes>
-        <Route path= '/' element = {<SignUp />}></Route>
-        <Route path= '/login' element = {<Login />}></Route>
-        <Route path= '/dashboard' element = {<Dashboard />}></Route>
+        <Route path= '/' element = {<Login />}></Route>
+        <Route path= '/signup' element = {<SignUp />}></Route>
+        <Route path= '/participant-dashboard' element = {<ParticipantDashboard />}></Route>
+        <Route path= '/trainer-dashboard' element = {<TrainerDashboard />}></Route>
+        <Route path= '/admin-dashboard' element = {<IQADashboard />}></Route>
         <Route path= '/feedback/save' element = {<FeedbackForm />}></Route>
       </Routes>
     </div>

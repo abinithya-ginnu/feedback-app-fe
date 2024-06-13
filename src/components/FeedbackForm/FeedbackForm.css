@@ -1,25 +1,29 @@
-.feedback-container {
-    display: flex;
-    justify-content: center;
-
-    .feedback-qn {
+.feedback-main {
+    background-color: var(--fb-final-color);
+    .feedback-container {
         display: flex;
-        justify-content: start;
-        flex-direction: column;
-
-        .fb-icons {
-            width: 100% !important;
-            justify-content: space-between;
+        justify-content: center;
+    
+        .feedback-qn {
+            display: flex;
+            justify-content: start;
+            flex-direction: column;
+    
+            .fb-icons {
+                width: 100% !important;
+                justify-content: space-between;
+            }
+    
+            b {
+                text-align: left;
+            }
         }
-
-        b {
-            text-align: left;
-        }
-    }
-    .submit-button {
-        background-color: var(--fb-primary-color);
-        &:hover {
+        .submit-button {
             background-color: var(--fb-primary-color);
+            &:hover {
+                background-color: var(--fb-primary-color);
+            }
         }
     }
 }
+

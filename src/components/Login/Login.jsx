@@ -63,7 +63,14 @@ const Login = () => {
             sessionStorage.setItem("id", response.data.id);
             sessionStorage.setItem("token", response.data.token);
             sessionStorage.setItem("name", response.data.name);
-            navigate("/dashboard");
+            sessionStorage.setItem("profession", response.data.profession);
+            if(response.data.profession === 'PARTICIPANT') {
+              navigate("/participant-dashboard");
+            } else if (response.data.profession === 'IQA') {
+              navigate("/admin-dashboard");
+            } else if (response.data.profession === 'TRAINER') {
+              navigate("/trainer-dashboard");
+            }
           } else {
             setAlert("Invalid credentials!");
             setTimeout(() => {
@@ -144,7 +151,7 @@ const Login = () => {
                   </Alert>}
               </Box>
               <div className='signup'>
-                <h5>Don't have an account ? <a href="/">Register</a></h5>
+                <h5>Don't have an account ? <a href="/signup">Register</a></h5>
               </div> 
             </Item>
             </Box>   

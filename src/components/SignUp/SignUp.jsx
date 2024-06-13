@@ -132,7 +132,14 @@ const SignUp = () => {
                   sessionStorage.setItem("id", response.data.id);
                   sessionStorage.setItem("token", response.data.token);
                   sessionStorage.setItem("name", response.data.name);
-                  navigate("/dashboard");
+                  sessionStorage.setItem("profession", response.data.profession);
+                  if(response.data.profession === 'PARTICIPANT') {
+                    navigate("/participant-dashboard");
+                  } else if (response.data.profession === 'IQA') {
+                    navigate("/admin-dashboard");
+                  } else if (response.data.profession === 'TRAINER') {
+                    navigate("/trainer-dashboard");
+                  }
                 }
             }
           ).catch((err)=> {
@@ -233,7 +240,7 @@ const SignUp = () => {
                       Register
                     </Button>
                     <div className='login'>
-                      <h5>Already have an account? <a href="/login">Login</a></h5>
+                      <h5>Already have an account? <a href="/">Login</a></h5>
                     </div>
                 </Box>
               </Item>
