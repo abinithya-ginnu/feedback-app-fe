@@ -1,0 +1,7 @@
+.iqa-dashboard {
+    background-color: var(--fb-final-color);
+    .iqa-container {
+        padding: 16px 0px 16px 0px;
+        max-width: 1000px;
+    }
+}

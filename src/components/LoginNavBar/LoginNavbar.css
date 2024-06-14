@@ -17,6 +17,11 @@
     .dropdown-toggle::after {
         margin-left: 1.255em;
     }
+    .profile {
+        p {
+            font-size: 0.65rem !important;
+        }
+    }
 }
 
 .dropdown-item.active, .dropdown-item:active {

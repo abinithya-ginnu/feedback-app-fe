@@ -52,7 +52,7 @@ const LoginNavbar = (props) => {
             <Dropdown className='nav-links'>
                 <Dropdown.Toggle variant="light" id="dropdown-basic" className='login-nav-dropdown'>
                   <img src="profileimage.svg" alt="Profile" style={{ width: '32px', borderRadius: '50%', marginRight: '5px' }} />
-                  <ListItemText primary={sessionStorage.getItem("name")} />
+                  <ListItemText className='profile' secondary={props.profession} primary={sessionStorage.getItem("name")} />
                 </Dropdown.Toggle>
                 <Dropdown.Menu>
                     <Dropdown.Item as={NavLink} to="/profile">Profile & Settings</Dropdown.Item>

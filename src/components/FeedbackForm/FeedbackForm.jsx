@@ -106,7 +106,6 @@ const FeedbackForm = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(input);
     axios.post(process.env.REACT_APP_BASE_URL + "/feedback/save",input,{headers:headers}).then(
       (response)=>{
           if (response.data.status === "success"){

@@ -127,7 +127,6 @@ const SignUp = () => {
       if (isNameValid && isEmailValid && !isEmailExist && isPasswordValid){
           axios.post("http://localhost:8080/signup",input).then(
             (response)=>{
-                console.log(response.data);
                 if (response.data.status === "success"){
                   sessionStorage.setItem("id", response.data.id);
                   sessionStorage.setItem("token", response.data.token);
@@ -136,7 +135,7 @@ const SignUp = () => {
                   if(response.data.profession === 'PARTICIPANT') {
                     navigate("/participant-dashboard");
                   } else if (response.data.profession === 'IQA') {
-                    navigate("/admin-dashboard");
+                    navigate("/iqa-dashboard");
                   } else if (response.data.profession === 'TRAINER') {
                     navigate("/trainer-dashboard");
                   }

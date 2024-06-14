@@ -67,7 +67,7 @@ const Login = () => {
             if(response.data.profession === 'PARTICIPANT') {
               navigate("/participant-dashboard");
             } else if (response.data.profession === 'IQA') {
-              navigate("/admin-dashboard");
+              navigate("/iqa-dashboard");
             } else if (response.data.profession === 'TRAINER') {
               navigate("/trainer-dashboard");
             }

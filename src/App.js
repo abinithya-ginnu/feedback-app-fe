@@ -16,7 +16,7 @@ function App() {
         <Route path= '/signup' element = {<SignUp />}></Route>
         <Route path= '/participant-dashboard' element = {<ParticipantDashboard />}></Route>
         <Route path= '/trainer-dashboard' element = {<TrainerDashboard />}></Route>
-        <Route path= '/admin-dashboard' element = {<IQADashboard />}></Route>
+        <Route path= '/iqa-dashboard' element = {<IQADashboard />}></Route>
         <Route path= '/feedback/save' element = {<FeedbackForm />}></Route>
       </Routes>
     </div>

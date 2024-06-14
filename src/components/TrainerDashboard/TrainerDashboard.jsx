@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useCallback, useEffect, useState } from 'react'
 import LoginNavbar from '../LoginNavBar/LoginNavbar'
 import { DataGrid, GridActionsCellItem, GridToolbarContainer, GridToolbarExport } from '@mui/x-data-grid';
 import { Box, Grid, Paper } from '@mui/material';
@@ -6,7 +6,8 @@ import axios from 'axios';
 import { createTheme, ThemeProvider, styled } from '@mui/material/styles';
 import dayjs from 'dayjs';
 import { Delete, Edit, Update } from '@mui/icons-material';
-import AddCourse from '../AddCourse/AddCourse';
+import './TrainerDashboard.css';
+import UpdateCourse from '../UpdateCourse/UpdateCourse';
 
 const Item = styled(Paper)(({ theme }) => ({
   ...theme.typography.body2,
@@ -56,8 +57,31 @@ const customToolBar = () => {
 }
 
 const TrainerDashboard = () => {
-
   const [courses, setCourses] = useState([]);
+  const [open, setOpen] = useState(false);
+  const [selectedCourse, setSelectedCourse] = useState(null);
+
+  const handleOpen = (course) => {
+    fetchCourseDetails(course);
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+    setSelectedCourse(null);
+  };
+
+  const fetchCourseDetails = (course) =>{
+    axios.get(process.env.REACT_APP_BASE_URL + '/course/get/'+ course.id, {headers: headers})
+    .then(response => {
+        if(response.data.code === 200) {
+          setSelectedCourse(response.data.details);
+        }
+    })
+    .catch(error => {
+        console.error('Error fetching data:', error);
+    });
+  }
 
   const [headers, setHeaders] = useState(
       {
@@ -102,8 +126,8 @@ const TrainerDashboard = () => {
 
   const courseColumns = [
       { field: 'course_name', headerName: 'Name', width: 250 },
-      { field: 'start_date', headerName: 'Start Date', type: 'date', width: 150, valueFormatter: (value) => dayjs(value).format('DD/MM/YYYY') },
-      { field: 'end_date', headerName: 'End Date', type: 'date', width: 150, valueFormatter: (value) => dayjs(value).format('DD/MM/YYYY') },
+      { field: 'start_date', headerName: 'Start Date', type: 'date', width: 150, valueFormatter: (value) => dayjs(value).format('DD/MMM/YYYY') },
+      { field: 'end_date', headerName: 'End Date', type: 'date', width: 150, valueFormatter: (value) => dayjs(value).format('DD/MMM/YYYY') },
       { field: 'feedback_score', headerName: 'Feedback Score', sortable: false, width: 150 },
       { field: 'training_type', headerName: 'Duration', width: 150, valueFormatter: (value) => value.indexOf('LTT') != -1 ? `6 months` : (value.indexOf('MDT') != -1 ? `2 months` : value.indexOf('Micro') != -1 && `1 month`) },
       { field: 'description', headerName: 'Description', sortable: false, width: 300 },
@@ -112,7 +136,7 @@ const TrainerDashboard = () => {
           <GridActionsCellItem
             icon={<Edit />}
             label="Update"
-            onClick={<AddCourse />}
+            onClick={() => handleOpen(params.row)}
             showInMenu
           />,
           <GridActionsCellItem
@@ -128,42 +152,45 @@ const TrainerDashboard = () => {
   return (
     <div>
       <LoginNavbar profession="TRAINER" refresh={refresh}/>
-      <div className="container mt-3"> 
-        <ThemeProvider theme={lightTheme}>
-          <Box
-          sx={{
-              p: 2,
-              borderRadius: 2,
-              bgcolor: 'background.default',
-              display: 'grid',
-          }}
-          >
-            <Item key={1} elevation={1}> 
-              <Grid xs={12} md={12} sm={12} xl={12}>
-                <div style={{ height: 666, width: '100%' }}>
-                    {courses.length > 0 &&
-                        <DataGrid
-                            rows={courses}
-                            columns={courseColumns}
-                            getRowId={(row) => row.id}
-                            initialState={{
-                                pagination: {
-                                    paginationModel: { page: 0, pageSize: 10 },
-                                },
-                            }}
-                            pageSizeOptions={[5, 10]}
-                            slots={{
-                                toolbar: customToolBar,
-                            }}
+      <div className="trainer-dashboard">
+        <div className="container trainer-container"> 
+          <ThemeProvider theme={lightTheme}>
+            <Box
+            sx={{
+                p: 2,
+                borderRadius: 2,
+                bgcolor: 'background.default',
+                display: 'grid',
+            }}
+            >
+              <Item key={1} elevation={1}> 
+                <Grid xs={12} md={12} sm={12} xl={12}>
+                  <div style={{ height: 666, width: '100%' }}>
+                      {courses.length > 0 &&
+                          <DataGrid
+                              rows={courses}
+                              columns={courseColumns}
+                              getRowId={(row) => row.id}
+                              initialState={{
+                                  pagination: {
+                                      paginationModel: { page: 0, pageSize: 10 },
+                                  },
+                              }}
+                              pageSizeOptions={[5, 10]}
+                              slots={{
+                                  toolbar: customToolBar,
+                              }}
                     />}
-                    {courses.length === 0 &&
-                        <p fontFamily="-apple-system, BlinkMacSystemFont, sans-serif">No data available to display</p>
-                    }
-                </div>
-              </Grid>
-            </Item>
-          </Box>
-        </ThemeProvider>   
+                      <UpdateCourse open={open} handleClose={handleClose} course={selectedCourse} refresh={refresh}/>
+                      {courses.length === 0 &&
+                          <p fontFamily="-apple-system, BlinkMacSystemFont, sans-serif">No data available to display</p>
+                      }
+                  </div>
+                </Grid>
+              </Item>
+            </Box>
+          </ThemeProvider>   
+        </div>
       </div>
     </div>
   )

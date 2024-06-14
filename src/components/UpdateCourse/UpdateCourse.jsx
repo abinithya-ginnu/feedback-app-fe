@@ -16,7 +16,7 @@ import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import axios from 'axios';
-import './AddCourse.css'
+import './UpdateCourse.css'
 
 const style = {
   position: 'absolute',
@@ -48,24 +48,28 @@ const BootstrapDialog = styled(Dialog)(({ theme }) => ({
   }
 }));
 
-const AddCourse = (props) => {
-    const [open, setOpen] = React.useState(false);
-    const handleOpen = () => setOpen(true);
-    const handleClose = () => setOpen(false);
+const UpdateCourse = ({ open, handleClose, course, refresh }) => {
     const [alert, setAlert] = useState("");
 
-    const [input, setInput] = useState({
-      course_name: '',
-      organization_unit: 0,
-      training_type: 0,
-      start_date: new Date(),
-      end_date: new Date(),
-      batch_count: 0,
-      status: 0,
-      feedback_score: '',
-      description: '',
-      trainer: parseInt(sessionStorage.getItem("id"))
-    });
+    const [input, setInput] = useState(course);
+
+    useEffect(() => {
+        setInput({
+            id: course && course.id,
+            course_name: course && course.course_name,
+            organization_unit: course && course.organization_unit,
+            training_type: course && course.training_type,
+            start_date: course && new Date(course.start_date),
+            end_date: course && new Date(course.end_date),
+            batch_count: course && course.batch_count,
+            status: course && course.status,
+            feedback_score: course && course.feedback_score,
+            description: course && course.description,
+            trainer: parseInt(sessionStorage.getItem("id")),
+            created_date: course && new Date(course.created_date),
+            modified_date: course && new Date(course.modified_date)
+          });
+    },[course])
 
     const [isCourseNameValid, setIsCourseNameValid] = useState(true);
 
@@ -127,13 +131,18 @@ const AddCourse = (props) => {
     ]
 
     const inputHandler= (event)=> {
-      setInput({...input,[event.target.name]:event.target.value});
       if(event.target.name === "course_name"){
+        setInput({...input,[event.target.name]:event.target.value});
         if(event.target.value === ""){
           setIsCourseNameValid(false);
         } else {
           setIsCourseNameValid(true);
         }
+      } else if (event.target.name === 'organization_unit' || event.target.name === 'status'
+                || event.target.name === 'training_type') {
+        setInput({...input,[event.target.name]:parseInt(event.target.value)});
+      } else {
+        setInput({...input,[event.target.name]:event.target.value});
       }
     }
 
@@ -153,31 +162,20 @@ const AddCourse = (props) => {
         "Authorization" : "Bearer " + sessionStorage.getItem("token")
       }
     )
-    const addCourse = (e) =>{
+    const updateCourse = (e) =>{
+      console.log(input);
       e.preventDefault();
       if(input.course_name === ""){
         input.course_name === "" && setIsCourseNameValid(false);
       } else {
           axios.post(process.env.REACT_APP_BASE_URL + "/course/save",input,{headers:headers}).then(
             (response)=>{
-              if(response.status === 201){
-                setAlert("Course added successfully!");
+              if(response.data.code === 200){
+                setAlert("Course updated successfully!");
                 setTimeout(() => {
                   setAlert("");
-                  setInput({
-                    course_name: '',
-                    organization_unit: 0,
-                    training_type: 0,
-                    start_date: new Date(),
-                    end_date: new Date(),
-                    batch_count: '',
-                    status: 0,
-                    feedback_score: '',
-                    description: '',
-                    trainer: parseInt(sessionStorage.getItem("id"))
-                  });
                 }, 3000);
-                props.refresh();
+                refresh();
               }
             }
           ).catch((err)=> {
@@ -191,10 +189,7 @@ const AddCourse = (props) => {
 
    
     return (
-      <div className='add-course-modal'>
-        <a className="nav-link" href="#">
-            <button onClick={handleOpen} className='btn btn-primary fb-btn-primary'>Add Course</button>
-        </a>
+      <div className='update-course-modal'>
         <Modal
           open={open}
           onClose={handleClose}
@@ -222,7 +217,7 @@ const AddCourse = (props) => {
                   fontFamily: '-apple-system, BlinkMacSystemFont, sans-serif'
                 }} 
                 id="customized-dialog-title">
-                  Add New Course
+                  Update Course
                 </DialogTitle>
                 <IconButton
                   aria-label="close"
@@ -248,7 +243,7 @@ const AddCourse = (props) => {
                       id="course_name"
                       name='course_name'
                       type='text'
-                      value={input.course_name}
+                      value={input && input.course_name}
                       onChange={inputHandler}
                       sx={{ fontFamily: '-apple-system, BlinkMacSystemFont, sans-serif' }}
                       />
@@ -262,7 +257,7 @@ const AddCourse = (props) => {
                     id="organization_unit"
                     name='organization_unit'
                     type='text'
-                    value={input.organization_unit}
+                    value={input && input.organization_unit}
                     onChange={inputHandler}
                     select
                     SelectProps={{
@@ -285,7 +280,7 @@ const AddCourse = (props) => {
                     type='text'
                     size="medium"
                     name='training_type'
-                    value={input.training_type}
+                    value={input && input.training_type}
                     onChange={inputHandler}
                     select
                     SelectProps={{
@@ -308,7 +303,7 @@ const AddCourse = (props) => {
                     type='number'
                     size="medium"
                     name='status'
-                    value={input.status}
+                    value={input && input.status}
                     onChange={inputHandler}
                     select
                     SelectProps={{
@@ -330,7 +325,7 @@ const AddCourse = (props) => {
                         required
                         name='start_date' 
                         size='medium'
-                        value={dayjs(input.start_date)}
+                        value={dayjs(input && input.start_date)}
                         onChange={startDateHandler}
                         format="YYYY-MM-DD"
                         disablePast
@@ -347,7 +342,7 @@ const AddCourse = (props) => {
                         required
                         name='end_date'
                         size='medium'
-                        value={dayjs(input.end_date)}
+                        value={dayjs(input && input.end_date)}
                         onChange={endDateHandler}
                         format="YYYY-MM-DD"
                         disablePast
@@ -364,7 +359,7 @@ const AddCourse = (props) => {
                     multiline
                     rows={2}
                     id="description"
-                    value={input.description}
+                    value={input && input.description}
                     onChange={inputHandler}
                     placeholder="Type Here..."
                     sx={{fontSize:'50px'}}
@@ -381,8 +376,8 @@ const AddCourse = (props) => {
                   <Alert sx={{ padding: '0px 16px' }} variant="outlined" severity="error">
                     {alert}
                   </Alert>}
-                   <Button autoFocus variant="contained" size='medium' type='submit' style={{backgroundColor: "#3F206D"}} onClick={addCourse}>
-                    Add
+                   <Button autoFocus variant="contained" size='medium' type='submit' style={{backgroundColor: "#3F206D"}} onClick={updateCourse}>
+                    Update
                    </Button>
                 </DialogActions>
                 </DialogContent>
@@ -394,4 +389,4 @@ const AddCourse = (props) => {
     );
 }
 
-export default AddCourse
+export default UpdateCourse
